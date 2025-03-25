@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router'
+import { RouterLink, RouterView } from 'vue-router'
 </script>
 
 <template>
-  <header class="header">
-    <nav class="nav">
-      <RouterLink to="/" class="link">
+  <header class="w-full max-h-screen flex flex-col items-center py-8">
+    <nav class="w-full flex justify-center gap-12 text-sm">
+      <RouterLink to="/" class="px-6 py-3 text-gray-700 no-underline hover:text-gray-900">
         Home
       </RouterLink>
-      <RouterLink to="/about" class="link">
+      <RouterLink to="/about" class="px-6 py-3 text-gray-700 no-underline hover:text-gray-900">
         About
       </RouterLink>
     </nav>
@@ -16,32 +16,3 @@ import { RouterLink } from 'vue-router'
 
   <RouterView />
 </template>
-
-<style scoped>
-.header {
-  width: 100%;
-  max-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 2rem 0;
-}
-
-.nav {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  gap: 3rem;
-  font-size: 0.875rem;
-}
-
-.link {
-  padding: 0.75rem 1.5rem;
-  color: #4a4a4a;
-  text-decoration: none;
-}
-
-.link:hover {
-  color: #1a1a1a;
-}
-</style>
