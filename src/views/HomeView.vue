@@ -9,7 +9,7 @@ const store = useFirstStore()
 const nextFn = () => {
   store.checkWeatherList()
   setTimeout(() => {
-    store.callWeatherFromLocation('hi')
+    store.callWeatherFromLocation()
   }, 1000);
 }
 

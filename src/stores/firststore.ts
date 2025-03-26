@@ -1,4 +1,4 @@
-import type { allData, GeoLocation, LatLong, SingleWeather, StoredWeather } from '@/types/types'
+import type { GeoLocation, LatLong, SingleWeather, StoredWeather } from '@/types/types'
 import { defineStore } from 'pinia'
 import { useFirst } from '@/composables/useFirst'
 const { getGeoLocationFromName, getWeatherFromLocation } = useFirst()
@@ -6,7 +6,7 @@ const { getGeoLocationFromName, getWeatherFromLocation } = useFirst()
 export const useFirstStore = defineStore('useFirstStore', {
   state: () => ({
     searchText: '' as string,
-    geoLocation: [],
+    geoLocation: [] as GeoLocation[],
     geoWeatherByLocation: null as null | SingleWeather,
     storedWeathers: [] as StoredWeather[],
     currentWeather: null as null | StoredWeather,
@@ -27,10 +27,11 @@ export const useFirstStore = defineStore('useFirstStore', {
     },
     async callGeoLocationFromName() {
       try {
-        const data = await getGeoLocationFromName(this.searchText)
-        console.log(data)
-
-        this.geoLocation = data
+        getGeoLocationFromName(this.searchText).then((res: any) => {
+          //cb(res)
+          console.log(res, 'hgff')
+          this.geoLocation = res
+        })
       } catch (err: unknown) {
         if (err instanceof Error) {
           this.errorMessage = err.message
@@ -42,15 +43,23 @@ export const useFirstStore = defineStore('useFirstStore', {
         this.loader = false
       }
     },
-    async callWeatherFromLocation(data: any) {
-      console.log('dadasdkjhdsj', this.geoLocation)
+    async callWeatherFromLocation() {
+      console.log('dadasdkjhdsj', this.geoLocation[0])
       const latlong: LatLong = {
-        lat: Number(51.5073219),
-        lon: Number(-0.1276474),
+        lat: this.geoLocation[0].lat,
+        lon: this.geoLocation[0].lon,
       }
       try {
         const data = await getWeatherFromLocation(latlong)
         console.log('weather', data)
+
+        this.storedWeathers.unshift({
+          name: this.geoLocation[0].name,
+          lat: this.geoLocation[0].lat,
+          lon: this.geoLocation[0].lon,
+          weatherDetail: data,
+        })
+        console.log(this.storedWeathers)
       } catch (err: unknown) {
         if (err instanceof Error) {
           this.errorMessage = err.message

@@ -1,5 +1,5 @@
 import { BASE_URL } from '@/constants/constants'
-import type { allData, GeoLocation, LatLong, SingleWeather } from '@/types/types'
+import type { GeoLocation, LatLong, SingleWeather } from '@/types/types'
 
 export function useFirst() {
   const getGeoLocationFromName = async (name: string) => {
